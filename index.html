@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="kk"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Жылу үдерістерінің қайтымсыздығы — зерттеу-зертхана</title>
+<style>
+:root{--c:#0891b2;--v:#7c3aed;--t:#0d9488;--tx:#1e2a44;--mut:#5b6b85;--ok:#059669;--bad:#dc2626;--gd:#d97706;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f9ff linear-gradient(135deg,#eaf7fb 0,#f1ecff 55%,#e6f8f4 100%) fixed;color:var(--tx);font:16px/1.55 system-ui,"Segoe UI",Arial,sans-serif;min-height:100vh}
+.w{max-width:1080px;margin:0 auto;padding:14px}
+h1{margin:.2em 0;font-size:clamp(22px,3.8vw,34px);text-align:center;background:linear-gradient(90deg,var(--c),var(--v),var(--t));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{text-align:center;color:var(--mut);margin-bottom:10px}
+.cd{background:rgba(255,255,255,.82);backdrop-filter:blur(8px);border:1px solid rgba(124,58,237,.18);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 10px 26px rgba(60,40,140,.1),inset 0 1px 0 #fff}
+.cd h3{margin:.1em 0 .4em;color:var(--v)}
+.tb{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+button{font:inherit;font-weight:700;cursor:pointer;border:0;border-radius:12px;padding:9px 16px;color:#fff;background:linear-gradient(135deg,var(--c),var(--v));box-shadow:0 4px 0 #4c1d95,0 8px 14px rgba(76,29,149,.25);transition:transform .1s}
+button:active{transform:translateY(3px);box-shadow:0 1px 0 #4c1d95}
+button.s{background:#fff;color:var(--v);border:2px solid var(--v);box-shadow:0 3px 0 #c4b5fd}
+button.on{background:linear-gradient(135deg,var(--t),var(--c));box-shadow:0 4px 0 #0f5f66}
+.tb button{flex:1 1 auto}
+canvas{width:100%;height:auto;display:block;border-radius:14px;border:1px solid #cfe3f3;background:linear-gradient(#f9fdff,#e8f4fb)}
+.ctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:10px 0}
+.ctl label{font-size:14px;color:var(--mut)}.ctl input[type=range]{width:100%;accent-color:var(--v)}
+.ro{display:flex;gap:8px;flex-wrap:wrap}.ro div{background:#f1ecff;border:1px solid #d8c9fb;border-radius:10px;padding:5px 12px}.ro b{color:var(--v)}
+.q{border-top:1px solid #e1e7f2;padding:12px 0}.q label.o{display:block;padding:7px 11px;margin:4px 0;border:1px solid #d5deee;border-radius:10px;cursor:pointer;background:#fff}
+.fb{margin-top:8px;padding:9px 12px;border-radius:10px;font-size:14.5px}.ok{background:#d1fae5;border:1px solid var(--ok)}.no{background:#fee2e2;border:1px solid var(--bad)}
+.cl{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;margin:6px 0}
+.cl span.p{display:flex;gap:6px}.cl label{padding:3px 10px;border:1px solid #d5deee;border-radius:20px;cursor:pointer;font-size:13.5px;background:#fff}
+.od{display:flex;gap:8px;align-items:center;background:#fff;border:1px solid #d5deee;border-radius:10px;padding:6px 10px;margin:5px 0}.od span{flex:1}.od button{padding:2px 10px;box-shadow:none}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{border:1px solid #d5deee;padding:5px 8px;text-align:center}th{background:#ede9fe;color:var(--v)}
+.bar{height:16px;background:#e5e9f5;border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;width:0;transition:width .15s}
+.e{display:grid;grid-template-columns:150px 1fr 62px;gap:8px;align-items:center;font-size:14px;margin:5px 0}
+.qt{font-size:20px;text-align:center;color:var(--v);font-style:italic;border-left:5px solid var(--t);background:#ecfdf5;border-radius:0 14px 14px 0;padding:12px 16px}
+.sc{font-size:34px;font-weight:800;color:var(--v)}
+textarea{width:100%;border:1px solid #c4b5fd;border-radius:10px;padding:8px;font:inherit}
+.two{display:grid;grid-template-columns:1.5fr 1fr;gap:14px}@media(max-width:820px){.two{grid-template-columns:1fr}.e{grid-template-columns:110px 1fr 56px}}
+</style></head><body><div class="w">
+<h1>Жылу үдерістерінің қайтымсыздығы. Термодинамиканың екінші заңы</h1>
+<div class="sub">8-сынып · Физика · Құндылық: «Әділдік және жауапкершілік»</div>
+<div class="tb" id="nv"></div><div id="v"></div></div>
+<script>
+const $=s=>document.querySelector(s),f=(x,d=2)=>(+x).toFixed(d).replace('.',',');
+const M=(t,o,a,e)=>({k:'m',t,o,a,e});
+const G=[
+{n:'1-топ',h:'«Табиғат зерттеушілері»',top:'Жылу үдерістерінің қайтымдылығы және қайтымсыздығы',
+ tasks:['Қайтымды және қайтымсыз процестердің айырмашылығын анықтаңдар.','Ыстық шайдың суынуы мысалын талдаңдар.','Мұздың еруі және судың қайта қатуы үдерістерін салыстырыңдар.','Жылудың берілу бағытын түсіндіріңдер.'],
+ task:[{k:'c',t:'Процестерді екі бағанға орналастырыңыз:',cols:['Қайтымды (идеал модель)','Қайтымсыз'],it:[['Үйкелісі жоқ маятниктің тербелісі',0],['Үйкеліссіз серіппенің тербелісі',0],['Ыстық шайдың бөлмеде суынуы',1],['Бөлмеде мұздың еруі',1],['Секіріп жатқан доптың тоқтауы',1],['Шайда қанттың еруі және өздігінен бөлінбеуі',1]],e:'Қайтымсыз процестер өздігінен тек бір бағытта жүреді. Үйкелісі жоқ тербеліс — идеал модель.'},
+ M('Бөлмеде мұз ериді. Су бөлмеде өздігінен қатып, мұзға айнала ма?',['Иә, өздігінен қатады','Жоқ, қатуы үшін жылуды алып кететін құрал (мысалы, тоңазытқыш) және сыртқы жұмыс қажет','Тек түнде қатады','Тек ыдыс үлкен болса қатады'],1,'Бөлмеде мұздың еруі өздігінен жүреді, ал кері процесс үшін тоңазытқыштың жұмысы керек.'),
+ M('Жылу қай бағытта өздігінен беріледі?',['Суық денеден ыстық денеге','Ыстық денеден суық денеге','Температурасы бірдей денелер арасында ғана','Бағыты жоқ'],1,'Жылу өздігінен ыстық денеден суық денеге беріледі.')],
+ def:[M('Қорғау: ыстық шай неге өздігінен қызбайды?',['Кері процесс энергияның сақталу заңына қайшы','Кері процесс өздігінен жүрмейді: жылу өздігінен суық денеден ыстыққа берілмейді','Шайдың энергиясы жоқ','Бөлме ауасы жылу бере алмайды'],1,'Энергияның сақталу заңына кері процесс қайшы келмейді. Процестің бағытын термодинамиканың екінші заңы анықтайды.')]},
+{n:'2-топ',h:'«Клаузиус зертханасы»',top:'Термодинамиканың екінші заңы. Клаузиус тұжырымдамасы',
+ tasks:['Жылу өздігінен ыстық денеден суық денеге беріледі.','Кері бағытта жылудың берілуі сыртқы жұмыс атқарылмай өздігінен жүзеге аспайды.'],
+ task:[{k:'c',t:'Тұжырымдар Клаузиус тұжырымдамасына сәйкес пе?',cols:['Сәйкес','Сәйкес емес'],it:[['Жылу өздігінен ыстық денеден суық денеге беріледі',0],['Жылу өздігінен суық денеден ыстық денеге беріледі',1],['Тоңазытқышта жылу суық камерадан бөлмеге электр жұмысы арқылы беріледі',0],['Сыртқы жұмыссыз суық дене ыстық денені қыздыра алады',1],['Температуралары теңескен денелер өздігінен қайтадан ыстық және суық болып ажырайды',1],['Жылу алмасу температуралар теңескенше жүреді',0]],e:'Клаузиус бойынша кері бағыттағы жылу беру тек сыртқы жұмыс арқылы мүмкін.'},
+ M('Неліктен жылу өздігінен суық денеден ыстық денеге берілмейді?',['Бұл энергияның сақталу заңына қайшы','Бұл табиғи процестердің бағытын көрсететін термодинамиканың екінші заңына қайшы','Суық денеде энергия жоқ','Жылу ешқашан берілмейді'],1,'Энергия сақталуы бұзылмайды, бірақ процесс өздігінен тек ыстықтан суыққа жүреді. Кері бағыт үшін жұмыс керек.')],
+ def:[M('Қорғау: Кельвин тұжырымдамасы қайсысы?',['Жылу қозғалтқышы алынған жылудың барлығын жұмысқа айналдыра алады','Периодты жұмыс істейтін қозғалтқышта алынған жылудың барлығын жұмысқа айналдыру мүмкін емес','Жылу әрқашан суыққа беріледі','Жұмыс жылуға айнала алмайды'],1,'Жылудың бір бөлігі міндетті түрде суытқышқа беріледі.')]},
+{n:'3-топ',h:'«Энергия зерттеушілері»',top:'Доптың құлауы — механикалық энергияның өзгеруі және процестің қайтымсыздығы',
+ tasks:['Доп құлаған кезде оның жылдамдығы қалай өзгереді?','Кинетикалық энергия қай кезде артады?','Неліктен әр секірген сайын биіктік азаяды?','Механикалық энергияның бір бөлігі қандай энергияға айналады?','Доп бастапқы биіктікке неге өздігінен көтерілмейді?'],
+ task:[M('Доп құлаған кезде оның жылдамдығы қалай өзгереді?',['Артады','Азаяды','Өзгермейді','Нөлге тең'],0,'Еркін құлауда жылдамдық v = gt заңымен артады.'),
+ M('Доптың кинетикалық энергиясы қай кезде артады?',['Төмен қозғалғанда (құлағанда)','Ең жоғарғы нүктеде','Тыныштықта тұрғанда','Тек секіргенде'],0,'Құлағанда биіктік азаяды, потенциалдық энергия кинетикалыққа айналады.'),
+ M('Неліктен әр секірген сайын көтерілу биіктігі азаяды?',['Доптың массасы азаяды','Соқтығыста механикалық энергияның бір бөлігі ішкі энергияға және дыбысқа айналады','Энергия жоғалып кетеді','Ауырлық күші артады'],1,'Энергия жоғалмайды, ол ішкі энергияға және дыбысқа айналады.'),
+ M('Механикалық энергияның бір бөлігі қандай энергия түрлеріне айналады?',['Ішкі энергия және дыбыс','Тек потенциалдық энергия','Жарық энергиясы ғана','Ештеңеге айналмайды'],0,'Доп пен еден қызады (ішкі энергия), дыбыс шығады.'),
+ M('Доптың бастапқы биіктікке өздігінен қайта көтерілуі неліктен мүмкін емес?',['Энергияның сақталу заңына қайшы','Ішкі энергияның өздігінен толық механикалық энергияға қайта айналуы термодинамиканың екінші заңына қайшы','Допты ауа ұстап тұрады','Еден тым қатты'],1,'Тарап кеткен ішкі энергия өздігінен толық механикалық энергияға оралмайды.'),
+ {k:'o',t:'Доптың қозғалыс кезеңдерін дұрыс ретпен орналастырыңыз:',it:['Потенциалдық энергия','Еркін құлау','Кинетикалық энергияның артуы','Еденмен соқтығысу','Энергияның бір бөлігінің ішкі энергияға және дыбысқа айналуы','Қайта көтерілу','Секіру биіктігінің азаюы'],e:'Реті: энергия → құлау → Ek артуы → соқтығыс → ішкі энергия мен дыбыс → көтерілу → биіктіктің азаюы.'}],
+ def:[M('Неліктен тәжірибе нәтижесін бұрмаламай көрсету маңызды?',['Әділ баға алу үшін','Сенімді білім тек нақты өлшемдерге негізделеді','Мұғалім сұрағандықтан','Маңызды емес'],1,'Нақты өлшем — сенімді қорытындының негізі.'),
+ M('Ғылыми зерттеуде жауапкершілік не үшін қажет?',['Нәтиже адамдарға зиян келтірмей, шындықты көрсету үшін','Тез аяқтау үшін','Жұмысты көшіру үшін','Қажет емес'],0,'Жауапкершілік деректердің шынайылығын және нәтижені дұрыс қолдануды қамтамасыз етеді.'),
+ M('Табиғат заңдылықтарын түсіну адамға қандай мүмкіндік береді?',['Энергияны үнемдеп, оны жауапкершілікпен пайдалану','Заңдарды бұзу','Ештеңе өзгермейді','Тек сынақ тапсыру'],0,'Заңдарды білу энергияны үнемді және ақылды пайдалануға мүмкіндік береді.')]}];
+const ST=G.map(g=>({r:{},ord:{},tx:'',ck:[0,0,0]}));
+let cur='in',sub=0,raf=0;
+const total=g=>[...G[g].task,...G[g].def].length+1;
+function sc(g){const v=Object.values(ST[g].r).filter(x=>x).length;return{v,all:total(g)-1,p:Math.round(v/(total(g)-1)*100)}}
+function nav(){$('#nv').innerHTML=[['in','Кіріспе'],...G.map((g,i)=>[i,g.n+' · '+sc(i).p+'%']),['res','Нәтиже']].map(([k,n])=>`<button class="${k===cur?'on':'s'}" onclick="cur=${typeof k=='number'?k:`'${k}'`};sub=0;show()">${n}</button>`).join('')}
+function show(){cancelAnimationFrame(raf);nav();const b=$('#v');if(cur==='in')intro(b);else if(cur==='res')res(b);else grp(b)}
+function intro(b){b.innerHTML=`<div class="cd"><h3>Сабақтың тақырыбы</h3><p><b>Жылу үдерістерінің қайтымсыздығы. Термодинамиканың екінші заңы.</b></p><p><b>Оқу мақсаты:</b> 8.3.2.18 — термодинамиканың екінші заңының мағынасын түсіндіру.</p><ul><li>Қайтымды және қайтымсыз процестерді ажырату;</li><li>Термодинамиканың екінші заңын Клаузиус және Кельвин тұжырымдамалары арқылы түсіну;</li><li>Жылу процестерінің бағытын өмірлік жағдаяттарда талдау және заңды қолдану.</li></ul></div>
+<div class="cd"><h3>Құндылық: «Әділдік және жауапкершілік»</h3><div class="qt">«Жауапкершілік адамды адам етеді»</div><p>Табиғат заңдарын түсіну — жауапкершіліктің бастауы. Энергия жоғалмайды, бірақ пайдалы түрден тарап кетеді: оны үнемдеп, ақылмен пайдалану — біздің жауапкершілігіміз. Зерттеуде нәтижелерді өзгертпей, шынайы тіркеу — әділдіктің көрінісі.</p></div>
+<div class="cd"><h3>Екінші заңның екі тұжырымдамасы</h3><p><b>Клаузиус:</b> жылу өздігінен ыстық денеден суық денеге беріледі; кері бағытта сыртқы жұмыссыз өздігінен берілмейді.</p><p><b>Кельвин:</b> периодты жұмыс істейтін жылу қозғалтқышында алынған жылудың барлығын жұмысқа айналдыру мүмкін емес.</p><div class="tb"><button onclick="cur=0;show()">1-топтан бастау</button></div></div>`}
+function grp(b){const g=G[cur];b.innerHTML=`<div class="cd"><h3>${g.n} — ${g.h}</h3><b>${g.top}</b></div><div class="tb">${['Зерттеу','Тапсырма','Қорғау'].map((n,k)=>`<button class="${k==sub?'on':'s'}" onclick="sub=${k};show()">${n}</button>`).join('')}</div><div id="sb"></div>`;
+ [rs,()=>qs(G[cur].task,0),()=>qs(G[cur].def,G[cur].task.length,1)][sub]()}
+function rs(){const g=G[cur];$('#sb').innerHTML=`<div class="cd"><b>Зерттеу тапсырмалары:</b><ul>${g.tasks.map(t=>'<li>'+t+'</li>').join('')}</ul></div><div class="cd" id="lab"></div>`;[s1,s2,s3][cur]($('#lab'))}
+function qs(L,off,df){const s=ST[cur];$('#sb').innerHTML=`<div class="cd">${L.map((q,i)=>qh(q,off+i)).join('')}${df?`<div class="q"><b>Өз сөзіңізбен қорытынды (міндетті емес):</b><textarea rows="3" oninput="ST[cur].tx=this.value">${s.tx}</textarea><p><b>Өзін-өзі бағалау:</b></p>${['Нәтижелерді шынайы тіркедім','Міндетімді жауапкершілікпен орындадым','Топ мүшелерінің пікірін құрметтедім'].map((t,k)=>`<label style="display:block"><input type="checkbox" ${s.ck[k]?'checked':''} onchange="ST[cur].ck[${k}]=this.checked?1:0"> ${t}</label>`).join('')}</div>`:''}</div>`}
+function qh(q,i){const n='q'+i,s=ST[cur];let h=`<div class="q"><b>${q.t}</b>`;
+ if(q.k=='m')h+=q.o.map((o,j)=>`<label class="o"><input type="radio" name="${n}" value="${j}"> ${o}</label>`).join('');
+ if(q.k=='c')h+=q.it.map((it,j)=>`<div class="cl"><span>${it[0]}</span><span class="p">${q.cols.map((c,m)=>`<label><input type="radio" name="${n}_${j}" value="${m}"> ${c}</label>`).join('')}</span></div>`).join('');
+ if(q.k=='o'){if(!s.ord[i])s.ord[i]=[...q.it].sort(()=>Math.random()-.5);h+=`<div id="${n}o">${ordh(i)}</div>`}
+ return h+`<div class="tb"><button style="flex:0 0 auto" onclick="chk(${i})">Тексеру</button></div><div id="${n}f"></div></div>`}
+function ordh(i){return ST[cur].ord[i].map((t,j)=>`<div class="od"><b>${j+1}.</b><span>${t}</span><button onclick="mv(${i},${j},-1)">▲</button><button onclick="mv(${i},${j},1)">▼</button></div>`).join('')}
+function mv(i,j,d){const a=ST[cur].ord[i];if(j+d<0||j+d>=a.length)return;[a[j],a[j+d]]=[a[j+d],a[j]];$('#q'+i+'o').innerHTML=ordh(i)}
+function chk(i){const g=G[cur],all=[...g.task,...g.def],q=all[i],n='q'+i;let ok;
+ if(q.k=='m'){const r=document.querySelector(`input[name="${n}"]:checked`);if(!r)return $('#'+n+'f').innerHTML='<div class="fb no">Алдымен жауап таңдаңыз.</div>';ok=+r.value===q.a}
+ if(q.k=='c'){const rs=q.it.map((it,j)=>document.querySelector(`input[name="${n}_${j}"]:checked`));if(rs.some(x=>!x))return $('#'+n+'f').innerHTML='<div class="fb no">Барлық жолды толтырыңыз.</div>';ok=rs.every((r,j)=>+r.value===q.it[j][1])}
+ if(q.k=='o')ok=ST[cur].ord[i].every((t,j)=>t===q.it[j]);
+ ST[cur].r[i]=ok;$('#'+n+'f').innerHTML=`<div class="fb ${ok?'ok':'no'}"><b>${ok?'Дұрыс! ✔':'Қате. ✘'}</b> ${ok?'':q.k=='m'?'Дұрыс жауап: '+q.o[q.a]+'. ':''}${q.e}</div>`;nav()}
+function res(b){b.innerHTML=G.map((g,i)=>{const s=sc(i),df=ST[i].ck.filter(x=>x).length;return`<div class="cd"><h3>${g.n} — ${g.h}</h3><div class="sc">${s.v} / ${s.all}</div><div class="bar"><i style="width:${s.p}%;background:linear-gradient(90deg,var(--c),var(--v))"></i></div><p>Өзін-өзі бағалау: ${df}/3. ${s.v<s.all?'<b>Қайталау керек:</b> '+g.top+'.':'Барлық тапсырма дұрыс орындалды! 🎉'}</p></div>`}).join('')}
+/* 1-топ симуляциясы */
+function s1(el){let T0=90,Tr=20,sp=2,t=0,run=0,P=[],H=[];
+ el.innerHTML=`<canvas id="cv" width="760" height="340"></canvas><div class="ctl"><label>Шайдың бастапқы температурасы: <b id="a1"></b> °C<input type="range" id="r1" min="50" max="95" value="90"></label><label>Бөлме температурасы: <b id="a2"></b> °C<input type="range" id="r2" min="10" max="30" value="20"></label><label>Уақыт жылдамдығы: ×<b id="a3"></b><input type="range" id="r3" min="1" max="6" value="2"></label></div><div class="tb"><button id="b1">▶ Бастау</button><button class="s" id="b2">⏸ Тоқтату</button><button class="s" id="b3">↺ Қайта бастау</button></div><div class="ro"><div>Шай: <b id="o1"></b> °C</div><div>ΔT: <b id="o2"></b> °C</div><div id="o3"></div></div><div class="q"><b>Неліктен кері процесс өздігінен жүрмейді?</b> Шай бөлме ауасынан жылу алып, өздігінен қызбайды: жылу өздігінен тек ыстықтан суыққа беріледі. Тапсырма бөлімінде жауап беріңіз.</div>`;
+ const rst=()=>{t=0;run=0;P=[];H=[]};
+ [['r1',v=>T0=v,'a1'],['r2',v=>Tr=v,'a2'],['r3',v=>sp=v,'a3']].forEach(([i,fn,a])=>{$('#'+i).oninput=e=>{fn(+e.target.value);if(i!='r3')rst()}});
+ $('#b1').onclick=()=>run=1;$('#b2').onclick=()=>run=0;$('#b3').onclick=rst;
+ const c=$('#cv').getContext('2d');let last=performance.now();
+ (function fr(n){const dt=Math.min(.05,(n-last)/1e3);last=n;if(run)t+=dt*sp;const T=Tr+(T0-Tr)*Math.exp(-t/25),d=T-Tr;
+  if(run&&(H.length==0||t-H[H.length-1][0]>.5))H.push([t,T]);
+  $('#a1').textContent=T0;$('#a2').textContent=Tr;$('#a3').textContent=sp;$('#o1').textContent=f(T,1);$('#o2').textContent=f(d,1);$('#o3').innerHTML=d>.5?'Жылу беріледі: <b>шай → бөлме ауасы</b>':'<b>Жылулық тепе-теңдік</b>: таза жылу берілмейді';
+  c.clearRect(0,0,760,340);c.fillStyle='#d9ecf7';c.fillRect(0,255,760,85);
+  if(run&&d>.5&&Math.random()<Math.min(1,d/25)*.8)P.push({x:215+Math.random()*60,y:200,a:-Math.PI*Math.random(),l:1});
+  P.forEach(p=>{p.x+=Math.cos(p.a)*(40+d)*.02*(1+Math.abs(Math.sin(p.a)));p.y+=Math.sin(p.a)*1.4;p.l-=.008;c.fillStyle=`rgba(234,88,12,${Math.max(p.l,0)})`;c.beginPath();c.arc(p.x,p.y,4,0,7);c.fill()});P=P.filter(p=>p.l>0);
+  c.fillStyle='#0f766e66';for(let i=0;i<40;i++){const x=(i*97%420)+330+Math.sin(n/700+i)*6,y=40+(i*53%200)+Math.cos(n/600+i)*6;c.beginPath();c.arc(x,y,2.5,0,7);c.fill()}
+  c.fillStyle='rgba(0,0,0,.12)';c.beginPath();c.ellipse(245,262,85,14,0,0,7);c.fill();
+  const g=c.createLinearGradient(170,0,320,0);g.addColorStop(0,'#c7d2fe');g.addColorStop(.35,'#ffffff');g.addColorStop(1,'#a5b4fc');c.fillStyle=g;c.beginPath();c.moveTo(170,180);c.lineTo(320,180);c.lineTo(300,255);c.quadraticCurveTo(245,275,190,255);c.fill();c.strokeStyle='#7c3aed';c.lineWidth=2;c.stroke();
+  c.strokeStyle='#a5b4fc';c.lineWidth=7;c.beginPath();c.arc(322,215,22,-1.2,1.2);c.stroke();
+  const k=Math.min(1,Math.max(0,(T-10)/90));c.fillStyle=`rgb(${Math.round(120+110*k)},${Math.round(70+20*k)},${Math.round(30)})`;c.beginPath();c.ellipse(245,184,75,14,0,0,7);c.fill();c.strokeStyle='#7c3aed';c.stroke();
+  c.strokeStyle=`rgba(120,120,160,${Math.min(.7,d/60)})`;c.lineWidth=3;for(let i=0;i<3;i++){c.beginPath();const x=215+i*30;c.moveTo(x,170);for(let y=0;y<60;y+=6)c.lineTo(x+Math.sin(y/9+n/300+i)*7,170-y);c.stroke()}
+  c.fillStyle='#1e2a44';c.font='15px system-ui';c.fillText('Шай '+f(T,1)+' °C',200,300);c.fillText('Бөлме ауасы '+Tr+' °C',560,30);
+  c.strokeStyle='#cbd5e1';c.strokeRect(520,70,215,150);c.beginPath();c.strokeStyle='#7c3aed';c.lineWidth=2.5;H.forEach((h,i)=>{const x=520+Math.min(h[0],120)/120*215,y=220-(h[1]-10)/90*150;i?c.lineTo(x,y):c.moveTo(x,y)});c.stroke();c.fillStyle='#5b6b85';c.font='12px system-ui';c.fillText('T(t)',525,84);c.fillText('t →',705,236);
+  raf=requestAnimationFrame(fr)})(last)}
+/* 2-топ симуляциясы */
+function s2(el){let A=80,B=20,a=80,b=20,run=0,P=[];
+ el.innerHTML=`<canvas id="cv" width="760" height="320"></canvas><div class="ctl"><label>1-дененің температурасы: <b id="a1"></b> °C<input type="range" id="r1" min="10" max="100" value="80"></label><label>2-дененің температурасы: <b id="a2"></b> °C<input type="range" id="r2" min="10" max="100" value="20"></label></div><div class="tb"><button id="b1">▶ Тәжірибені бастау</button><button class="s" id="b3">↺ Қайталау</button></div><div class="ro"><div>1-дене: <b id="o1"></b> °C</div><div>2-дене: <b id="o2"></b> °C</div><div id="o3"></div></div><div class="q"><b>Неліктен жылу өздігінен суық денеден ыстық денеге берілмейді?</b> Жауабын Тапсырма бөлімінде тексеріңіз. Екі дене бірдей металдан, массалары тең.</div>`;
+ const rst=()=>{a=A;b=B;run=0;P=[]};
+ $('#r1').oninput=e=>{A=+e.target.value;rst()};$('#r2').oninput=e=>{B=+e.target.value;rst()};$('#b1').onclick=()=>run=1;$('#b3').onclick=()=>{rst();run=1};
+ const c=$('#cv').getContext('2d'),col=T=>{const k=Math.min(1,Math.max(0,(T-10)/90));return`rgb(${Math.round(70+170*k)},${Math.round(130-60*k)},${Math.round(230-180*k)})`};
+ const blk=(x,T,lab)=>{const w=150,h=130,y=120;c.fillStyle='rgba(0,0,0,.12)';c.beginPath();c.ellipse(x+w/2+15,y+h+14,w*.7,12,0,0,7);c.fill();c.fillStyle=col(T);c.fillRect(x,y,w,h);c.fillStyle='rgba(255,255,255,.35)';c.beginPath();c.moveTo(x,y);c.lineTo(x+30,y-28);c.lineTo(x+w+30,y-28);c.lineTo(x+w,y);c.fill();c.fillStyle='rgba(0,0,0,.22)';c.beginPath();c.moveTo(x+w,y);c.lineTo(x+w+30,y-28);c.lineTo(x+w+30,y+h-28);c.lineTo(x+w,y+h);c.fill();c.strokeStyle='#4c1d95';c.lineWidth=2;c.strokeRect(x,y,w,h);c.fillStyle='#fff';c.font='bold 22px system-ui';c.fillText(f(T,1)+' °C',x+22,y+h/2+8);c.fillStyle='#1e2a44';c.font='15px system-ui';c.fillText(lab,x+40,y+h+44)};
+ let last=performance.now();
+ (function fr(n){const dt=Math.min(.05,(n-last)/1e3);last=n;if(run){const q=.18*(a-b)*dt*2;a-=q;b+=q}const d=a-b;
+  $('#a1').textContent=A;$('#a2').textContent=B;$('#o1').textContent=f(a,1);$('#o2').textContent=f(b,1);$('#o3').innerHTML=Math.abs(d)>.5?`Жылу беріледі: <b>${d>0?'1-дене → 2-дене':'2-дене → 1-дене'}</b> (ыстықтан суыққа)`:'<b>Жылулық тепе-теңдік</b>: температуралар теңелді';
+  if(run&&Math.abs(d)>.5&&Math.random()<Math.min(1,Math.abs(d)/30)){const s=d>0?1:-1;P.push({x:s>0?200:520,y:150+Math.random()*100,s,l:1})}
+  c.clearRect(0,0,760,320);c.fillStyle='#d9ecf7';c.fillRect(0,250,760,70);blk(60,a,'1-дене (металл)');blk(500,b,'2-дене (металл)');
+  c.fillStyle='#94a3b855';c.fillRect(230,150,230,70);P.forEach(p=>{p.x+=p.s*3;p.l=1-(p.x-200)/330*p.s*(p.s>0?1:-1)+(p.s<0?0:0);c.fillStyle='rgba(234,88,12,.85)';c.beginPath();c.arc(p.x,p.y,5,0,7);c.fill()});P=P.filter(p=>p.x>190&&p.x<540);
+  c.fillStyle='#7c3aed';c.font='bold 16px system-ui';c.fillText(Math.abs(d)>.5?(d>0?'Q  →':'←  Q'):'Q = 0',335,190);
+  raf=requestAnimationFrame(fr)})(last)}
+/* 3-топ симуляциясы */
+function s3(el){const m=.2,e=.75,PX=100,fl=330;let h0=2,y=2,v=0,run=0,nb=0,ap=[],t=0,E0=m*9.8*h0,rise=0,done=0,tr=[],slow=0;
+ el.innerHTML=`<div class="two"><canvas id="cv" width="480" height="380"></canvas><div><b>Энергия (бастапқы E₀ = <span id="e0"></span> Дж)</b><div class="e"><span>Потенциалдық Eₚ</span><div class="bar"><i id="bp" style="background:#0891b2"></i></div><span id="vp"></span></div><div class="e"><span>Кинетикалық Eₖ</span><div class="bar"><i id="bk" style="background:#7c3aed"></i></div><span id="vk"></span></div><div class="e"><span>Ішкі энергия + дыбыс</span><div class="bar"><i id="bq" style="background:#d97706"></i></div><span id="vq"></span></div><div class="e"><span><b>Барлығы</b></span><div class="bar"><i id="bt" style="background:#059669"></i></div><span id="vt"></span></div><p style="font-size:13.5px;color:var(--mut)">Энергия жоғалмайды: механикалық энергияның бөлігі соқтығыста ішкі энергияға және дыбысқа айналады. Ауа кедергісі ескерілмейді.</p><div class="ro"><div>Биіктік: <b id="oh"></b> м</div><div>Жылдамдық: <b id="ov"></b> м/с</div></div></div></div>
+ <div class="tb">${[1,2,3].map(h=>`<button class="${h==2?'on':'s'}" id="h${h}">${h} м</button>`).join('')}<button id="bt1">Допты тастау</button><button class="s" id="bt2">Қайта бастау</button><button class="s" id="bt3">Нәтижені көрсету</button><label style="align-self:center"><input type="checkbox" id="sl"> Баяу қозғалыс</label></div>
+ <table><tr><th>Секіру саны</th><th>Көтерілу биіктігі</th><th>Бақылау нәтижесі</th></tr>${[1,2,3,4].map(i=>`<tr><td>${i}</td><td id="t${i}">—</td><td id="u${i}"></td></tr>`).join('')}</table><div id="rz" class="fb ok" style="display:none"></div>`;
+ const rst=()=>{y=h0;v=0;run=0;nb=0;ap=[];t=0;rise=0;done=0;tr=[];E0=m*9.8*h0;[1,2,3,4].forEach(i=>{$('#t'+i).textContent='—';$('#u'+i).textContent=''});$('#rz').style.display='none'};
+ [1,2,3].forEach(h=>$('#h'+h).onclick=()=>{h0=h;[1,2,3].forEach(k=>$('#h'+k).className=k==h?'on':'s');rst()});
+ $('#bt1').onclick=()=>{if(done||t>0)rst();run=1};$('#bt2').onclick=rst;$('#sl').onchange=e=>slow=e.target.checked;
+ $('#bt3').onclick=()=>{const z=$('#rz');z.style.display='block';if(!ap.length){z.textContent='Алдымен допты тастаңыз.';return}const l=ap[ap.length-1],fr=l/h0;z.innerHTML=`Бастапқы биіктік h₀ = ${f(h0,1)} м. ${ap.length}-секіруден кейін доп ${f(l)} м-ге көтерілді, яғни механикалық энергияның <b>${f(fr*100,1)}%</b> қалды (Eₘₑₓ = mgh). Қалған <b>${f(100-fr*100,1)}%</b> ішкі энергияға және дыбысқа айналды. Әр соқтығыста h/h₀ шамамен ${f(ap.length>1?ap[1]/ap[0]:ap[0]/h0)} есе кемиді. Доп өздігінен бастапқы биіктікке оралмайды — процесс қайтымсыз.`};
+ const c=$('#cv').getContext('2d');let last=performance.now();
+ (function fr(n){let dt=Math.min(.04,(n-last)/1e3)*(slow?.35:1);last=n;
+  if(run){const N=10,d=dt/N;for(let i=0;i<N;i++){const vo=v;v-=9.8*d;y+=v*d;t+=d;
+   if(y<=0&&v<0){y=0;v=-e*v;nb++;rise=1}
+   if(rise&&vo>0&&v<=0){ap.push(y);const k=ap.length;if(k<=4){$('#t'+k).textContent=f(y)+' м';$('#u'+k).textContent=`h/h₀ = ${f(y/(k>1?ap[k-2]:h0))} (${k>1?'алдыңғыдан':'бастапқыдан'})`}rise=0;if(y<.015){run=0;done=1;y=0;v=0}}}
+   tr.push([110+t*40,y]);if(tr.length>600)tr.shift()}
+  const Ep=m*9.8*y,Ek=.5*m*v*v,Q=Math.max(0,E0-Ep-Ek),pc=x=>Math.min(100,x/E0*100);
+  $('#e0').textContent=f(E0);$('#bp').style.width=pc(Ep)+'%';$('#bk').style.width=pc(Ek)+'%';$('#bq').style.width=pc(Q)+'%';$('#bt').style.width=pc(Ep+Ek+Q)+'%';$('#vp').textContent=f(Ep)+' Дж';$('#vk').textContent=f(Ek)+' Дж';$('#vq').textContent=f(Q)+' Дж';$('#vt').textContent=f(Ep+Ek+Q)+' Дж';$('#oh').textContent=f(y);$('#ov').textContent=f(Math.abs(v));
+  c.clearRect(0,0,480,380);c.fillStyle='#e6f2fb';c.fillRect(0,fl,480,50);const fg=c.createLinearGradient(0,fl,0,fl+22);fg.addColorStop(0,'#c4b5fd');fg.addColorStop(1,'#7c3aed');c.fillStyle=fg;c.fillRect(0,fl,480,16);
+  c.fillStyle='#fff';c.fillRect(0,0,56,fl);c.strokeStyle='#7c3aed';c.fillStyle='#4c1d95';c.font='12px system-ui';for(let i=0;i<=32;i++){const yy=fl-i*10,mj=i%5==0;c.beginPath();c.moveTo(56,yy);c.lineTo(56-(mj?14:7),yy);c.stroke();if(mj)c.fillText(f(i/10,1)+' м',2,yy+4)}
+  ap.forEach(a=>{c.strokeStyle='#d97706';c.setLineDash([4,4]);c.beginPath();c.moveTo(56,fl-a*PX);c.lineTo(470,fl-a*PX);c.stroke();c.setLineDash([])});
+  c.fillStyle='#0d948888';tr.forEach((p,i)=>{if(i%5==0){c.beginPath();c.arc(p[0],fl-p[1]*PX-10,2,0,7);c.fill()}});
+  const bx=110+t*40,by=fl-y*PX-10;c.fillStyle='rgba(0,0,0,.15)';c.beginPath();c.ellipse(bx,fl+6,12-Math.min(y*3,6),4,0,0,7);c.fill();const bg=c.createRadialGradient(bx-4,by-4,2,bx,by,11);bg.addColorStop(0,'#fff');bg.addColorStop(.4,'#38bdf8');bg.addColorStop(1,'#6d28d9');c.fillStyle=bg;c.beginPath();c.arc(bx,by,10,0,7);c.fill();
+  raf=requestAnimationFrame(fr)})(last)}
+show();
+</script></body></html>
